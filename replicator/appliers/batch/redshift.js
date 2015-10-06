@@ -36,8 +36,7 @@ function readAWSConfigFile()
   var f = new java.io.File(awsConfigFile);
   if (!f.isFile())
   {
-    message = "AWS S3 configuration file (share/" + awsConfigFileName
-    ") does not exist, "
+    message = "AWS S3 configuration file (share/" + awsConfigFileName + ") does not exist, "
         + "create one by using a sample (tungsten/cluster-home/samples/conf/s3-config.json)";
     throw new com.continuent.tungsten.replicator.ReplicatorException(message);
   }
