@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+#	Script to upload to S3 without using s3cmd,
+#	and supplying --expected-size, needed for files over 5GB.
+#
+# Will be called by redshift.js as s3PutCmd (around line 163).
+#
+
+[ A$DEBUG == A ] && {
+  LOGFILE=/dev/null
+} || {
+  echo Beginning $1 to $2 at `date` >>/tmp/upload-to-s3.log
+  LOGFILE=/tmp/awss3cp-`echo $LOCALFILENAME | tr ' /' '::'`-`date +%Y%m%d-%H:%M:%S`
+}
+
+export LOCALFILENAME S3FILENAME FILESIZE LOGFILE
+LOCALFILENAME=$1
+S3FILENAME=$2
+
+case A$1A$2 in
+  A/*As3*/) ;;
+  *) echo Usage: $0 /local/file/name s3://bucketname/pre/fix/ ; exit 1;;
+esac
+
+FILESIZE=`stat --format %s $LOCALFILENAME`
+echo Beginning actual upload of $LOCALFILENAME size $FILESIZE to $S3FILENAME at `date` >>$LOGFILE
+
+aws s3 cp $LOCALFILENAME $S3FILENAME --expected-size $FILESIZE >> $LOGFILE 2>&1
+RESULT=$?
+
+echo Finished upload-to-s3 return code $RESULT at `date` >> $LOGFILE
+
+exit $RESULT

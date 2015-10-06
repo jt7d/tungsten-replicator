@@ -172,7 +172,7 @@ function apply(csvinfo)
   }
 
   // Upload CSV to S3.
-  s3PutCmd = runtime.sprintf("s3cmd put %s%s %s/%s/", csv_file, csv_extension,
+  s3PutCmd = runtime.sprintf("upload-to-s3 %s%s %s/%s/", csv_file, csv_extension,
       awsS3Path, serviceName);
   runtime.exec(s3PutCmd);
   if (logger.isDebugEnabled())
@@ -259,7 +259,7 @@ function apply(csvinfo)
   // Clean-up CSV file from S3 if desired.
   if (cleanUpS3Files)
   {
-    s3DelCmd = runtime.sprintf("s3cmd del %s/%s/%s%s", awsS3Path, serviceName,
+    s3DelCmd = runtime.sprintf("aws s3 rm %s/%s/%s%s", awsS3Path, serviceName,
         csv_filename, csv_extension);
     if (logger.isDebugEnabled())
     {
