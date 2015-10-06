@@ -20,7 +20,7 @@ TIMESTAMP##
 DATE##
 #elseif ( $col.getTypeDescription().contains("TIME") )
 VARCHAR(17) /* WARN: no pure TIME type in Redshift */##
-#elseif ( $col.getTypeDescription().startswith("YEAR(") )
+#elseif ( $col.getTypeDescription().startsWith("YEAR(") )
 INT /* $col.getTypeDescription() */##
 #elseif ( $col.getTypeDescription().startsWith("TINYINT") )
 SMALLINT /* $col.getTypeDescription() */##
