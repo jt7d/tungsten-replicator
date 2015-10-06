@@ -55,7 +55,8 @@ FLOAT##
 #elseif ( $col.getTypeDescription().startsWith("DOUBLE") )
 DOUBLE PRECISION /* $col.getTypeDescription() */##
 #elseif ( $col.getTypeDescription().startsWith("ENUM") )
-VARCHAR($enum.largestElementLen($col.getTypeDescription())) /* $col.getTypeDescription() */##
+#set ( $enummax = (($enum.largestElementLen($col.getTypeDescription())/16)+2)*16 )
+VARCHAR($enummax) /* $col.getTypeDescription() */##
 #elseif ( $col.getTypeDescription().startsWith("SET") )
 VARCHAR(65535) /* $col.getTypeDescription() */##
 #elseif ( $col.getTypeDescription().equals("BIT(1)") )
