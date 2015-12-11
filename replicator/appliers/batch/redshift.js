@@ -187,7 +187,7 @@ function apply(csvinfo)
 
   // Create and execute copy command.
   copy_sql = runtime.sprintf(
-          "COPY %s FROM '%s/%s/%s%s' CSV NULL AS 'null' %s CREDENTIALS 'aws_access_key_id=%s;aws_secret_access_key=%s'",
+          "COPY %s FROM '%s/%s/%s%s' CSV ACCEPTINVCHARS NULL AS 'null' %s CREDENTIALS 'aws_access_key_id=%s;aws_secret_access_key=%s'",
           stage_table_fqn, awsS3Path, serviceName, csv_filename, csv_extension,
           gzip_option, awsAccessKey, awsSecretKey);
   if (logger.isDebugEnabled())
