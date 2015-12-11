@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+#	Remove NUL and CR characters from CSV files before compression
+#
+
+[ A$DEBUG = A ] || { 
+  echo RAN clean-and-compress $1 $2 at `date` >>/tmp/clean-and-compress.log
+}
+
+
+tr -d '\0\r' <$1 | gzip >$2

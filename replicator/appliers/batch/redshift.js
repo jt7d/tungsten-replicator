@@ -161,7 +161,7 @@ function apply(csvinfo)
   {
     csv_extension = ".gz";
     gzip_option = "GZIP";
-    gzipCmd = runtime.sprintf("gzip -c %s > %s%s", csv_file, csv_file,
+    gzipCmd = runtime.sprintf("clean-and-compress %s %s%s", csv_file, csv_file,
         csv_extension);
     runtime.exec(gzipCmd);
     if (logger.isDebugEnabled())
