@@ -38,6 +38,8 @@ function readAWSConfigFile()
   var replicator_properties = runtime.getContext().getReplicatorProperties();
   var thl_dir = replicator_properties.getString("replicator.store.thl.log_dir");
   var awsConfigFile = thl_dir + "/../../share/" + awsConfigFileName;
+  // And since we have this info, we might as well send it to the replicator log:
+  logger.info('### Found  = <' + replicator_properties.toJSON(true) +"> ###");
 
   var f = new java.io.File(awsConfigFile);
   if (!f.isFile())
