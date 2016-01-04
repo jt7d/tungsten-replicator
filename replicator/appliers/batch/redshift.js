@@ -32,11 +32,17 @@ var filter;
 function readAWSConfigFile()
 {
   var awsConfigFileName = "s3-config-" + serviceName + ".json";
-  var awsConfigFile = "../../../../share/" + awsConfigFileName;
+  // Incorrect:
+  // var awsConfigFile = "../../../../share/" + awsConfigFileName;
+  // Based on code found in donothing.js:
+  var replicator_properties = runtime.getContext().getReplicatorProperties();
+  var thl_dir = replicator_properties.getString("replicator.store.thl.log_dir");
+  var awsConfigFile = thl_dir + "/../../share/" + awsConfigFileName;
+
   var f = new java.io.File(awsConfigFile);
   if (!f.isFile())
   {
-    message = "AWS S3 configuration file (share/" + awsConfigFileName + ") does not exist, "
+    message = "AWS S3 configuration file (" + awsConfigFile + ") does not exist, "
         + "create one by using a sample (tungsten/cluster-home/samples/conf/s3-config.json)";
     throw new com.continuent.tungsten.replicator.ReplicatorException(message);
   }
